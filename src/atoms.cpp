@@ -104,7 +104,7 @@ void AtomChain::simChain() {
     }
     atoms_[0].setVel(0,0);
     (atoms_.end()-1)->setVel(0,0);
-    actByGravity(dtime,1000000);
+    actByGravity(dtime,_gravity);
     for(auto atom_it =atoms_.begin();atom_it<atoms_.end();atom_it++){
         atom_it->move(dtime);
     }
@@ -136,5 +136,8 @@ int AtomChain::getNearest(int x, int y) {
         }
 
     }
-    return r_index;
+    if(best_distance < 400)
+        return r_index;
+    else
+        return  -1;
 }

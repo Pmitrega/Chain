@@ -4,7 +4,8 @@ project(Chain)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_BUILD_TYPE Release)
 set(SFML_GAME_1_SOURCES
-        src/atoms.cpp)
+        src/atoms.cpp
+        src/physics_interface.cpp)
 set(SFML_DIR ${PROJECT_SOURCE_DIR}/lib/sfml/lib/cmake/SFML)
 
 set(SFML_STATIC_LIBRARIES TRUE)

@@ -67,9 +67,11 @@ public:
     void setVel(int index, double x, double y){atoms_[index].setVel(x,y);}
     void actByGravity(double time, double g = 10);
     int getNearest(int x, int y);
+    void set_gravity(double gravity){_gravity = gravity;};
 private:
     double desired_chain_size = 400;
     double base_chain_distance = 5;
+    double _gravity = 1000000;
     std::vector<Atom> atoms_;
     std::vector<Bound> bounds_;
 

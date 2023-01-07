@@ -1,20 +1,27 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include "atoms.hpp"
+#include "physics_interface.hpp"
 #include <random>
 #include <iostream>
 int main() {
+    double gravity = 500000;
     std::random_device dev;
     std::mt19937 rng(dev());
     std::uniform_int_distribution<std::mt19937::result_type> random(1,1000);
     sf::RenderWindow wind;
     wind.create(sf::VideoMode(1600,900),"My window");
     wind.setFramerateLimit(60);
+    Slider slider(1000, 50, 20 , 200 );
+    sf::RectangleShape slider_rect(sf::Vector2f(100,20));
+    slider_rect.setFillColor(sf::Color::Green);
+    slider_rect.setPosition(1000, 50);
     AtomNet at;
     AtomChain ac;
     ac.arrangeChain();
     //at.arrangeNet();
     auto atoms = ac.getAtoms();
+    ac.set_gravity(gravity);
     //at.disturb(0, Point2D{5,5});
     int counter = 0;
     while(wind.isOpen()) {
@@ -27,11 +34,18 @@ int main() {
                 int x_pos = sf::Mouse::getPosition(wind).x;
                 int y_pos = sf::Mouse::getPosition(wind).y;
                 int ind = ac.getNearest(x_pos,y_pos);
-                ac.setPos(ind,x_pos, y_pos);
-                ac.setVel(ind,0,0);
+                if(ind > 0) {
+                    ac.setPos(ind, x_pos, y_pos);
+                    ac.setVel(ind, 0, 0);
+                }
+                slider.set_value(x_pos, y_pos);
+                std::cout <<slider.get_length();
+                slider_rect.setSize(sf::Vector2f(slider.get_length(),20));
+                ac.set_gravity(gravity * slider.get_value());
             }
         }
         wind.clear(sf::Color::Black);
+        wind.draw(slider_rect);
         atoms = ac.getAtoms();
         for(auto atom:atoms){
             sf::CircleShape cr(3);
