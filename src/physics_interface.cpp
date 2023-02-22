@@ -4,8 +4,8 @@
 Slider::Slider(int loc_x, int loc_y, int height, int length) {
     _slider_min_x = loc_x;
     _slider_max_x = loc_x + length;
-    _slider_min_y = loc_y - height/2;
-    _slider_max_y = loc_y + height/2;
+    _slider_min_y = loc_y - height;
+    _slider_max_y = loc_y + height;
     _slider_height = height;
     _slider_length = length;
     _slider_value = 0.50;

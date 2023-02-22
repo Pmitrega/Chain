@@ -12,10 +12,20 @@ int main() {
     sf::RenderWindow wind;
     wind.create(sf::VideoMode(1600,900),"My window");
     wind.setFramerateLimit(60);
+    sf::Font font;
+    font.loadFromFile("Arial.ttf");
+    sf::Text text("gravity", font);
+    text.setPosition(sf::Vector2f(1000, 20));
+    text.setFillColor(sf::Color::White);
+    text.setCharacterSize(20);
+    text.setStyle(sf::Text::Bold);
     Slider slider(1000, 50, 20 , 200 );
     sf::RectangleShape slider_rect(sf::Vector2f(100,20));
     slider_rect.setFillColor(sf::Color::Green);
     slider_rect.setPosition(1000, 50);
+    sf::RectangleShape slider_background(sf::Vector2f(  200 + 10,30));
+    slider_background.setFillColor(sf::Color::Red);
+    slider_background.setPosition(1000 - 5, 50 - 5);
     AtomNet at;
     AtomChain ac;
     ac.arrangeChain();
@@ -34,7 +44,7 @@ int main() {
                 int x_pos = sf::Mouse::getPosition(wind).x;
                 int y_pos = sf::Mouse::getPosition(wind).y;
                 int ind = ac.getNearest(x_pos,y_pos);
-                if(ind > 0) {
+                if(ind >= 0) {
                     ac.setPos(ind, x_pos, y_pos);
                     ac.setVel(ind, 0, 0);
                 }
@@ -45,7 +55,9 @@ int main() {
             }
         }
         wind.clear(sf::Color::Black);
+        wind.draw(slider_background);
         wind.draw(slider_rect);
+        wind.draw(text);
         atoms = ac.getAtoms();
         for(auto atom:atoms){
             sf::CircleShape cr(3);

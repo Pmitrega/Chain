@@ -136,7 +136,7 @@ int AtomChain::getNearest(int x, int y) {
         }
 
     }
-    if(best_distance < 400)
+    if(best_distance < 800)
         return r_index;
     else
         return  -1;
